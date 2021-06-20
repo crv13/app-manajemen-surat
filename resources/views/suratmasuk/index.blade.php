@@ -55,9 +55,9 @@
                                 <a href="/suratmasuk/{{$suratmasuk->id}}/edit"
                                     class="btn btn-primary btn-sm my-1 mr-sm-1 btn-block"><i
                                         class="nav-icon fas fa-pencil-alt"></i> Edit</a>
-                                {{-- <a href="{{ route('disposisi.index', $suratmasuk->id) }}"
+                                <a href="{{ route('disposisi.index', $suratmasuk->id) }}"
                                     class="btn btn-primary btn-sm my-1 mr-sm-1 btn-block"><i
-                                        class="fas fa-file-alt"></i> Disposisi</a> --}}
+                                        class="fas fa-file-alt"></i> Disposisi</a> 
                                 @if (auth()->user()->role == 'admin')
                                 <a href="/suratmasuk/{{$suratmasuk->id}}/destroy"
                                     class="btn btn-danger btn-sm my-1 mr-sm-1 btn-block"

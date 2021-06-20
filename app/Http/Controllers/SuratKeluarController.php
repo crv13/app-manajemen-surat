@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\SuratKeluar;
-use App\Klasifikasi;
-use File;
+use Illuminate\Http\Request;
+use PDF;
 use Illuminate\Support\Facades\Auth;
+use Excel;
+use App\Instansi;
 
 class SuratKeluarController extends Controller
 {
@@ -130,5 +131,41 @@ class SuratKeluarController extends Controller
         $path = "datasuratkeluar/";
         File::delete($path . $suratkeluar->filekeluar);
         return redirect('suratkeluar/index') ->with('sukses','Data Surat Keluar Berhasil Dihapus');
+    }
+
+    //Function Untuk Agenda Surat keluar
+    public function agenda(Request $request)
+    {
+       $data_suratkeluar = \App\SuratKeluar::all();
+       return view('suratkeluar.agenda', compact('data_suratkeluar'));
+    }
+    public function agendakeluarcetak_pdf()
+    {
+       $inst = Instansi::first();
+        $suratkeluar = SuratKeluar::all();
+        $pdf = PDF::loadview('suratkeluar.cetakagendaPDF', compact('inst','suratkeluar'));
+        return $pdf->stream();
+    }
+
+   public function galeri(Request $request)
+   {
+       $data_suratkeluar = \App\SuratKeluar::all();
+       return view('suratkeluar.galeri',['data_suratkeluar'=> $data_suratkeluar]);
+   }
+
+    //function untuk download file
+    public function downfunc(){
+
+    $downloads=DB::table('suratkeluar')->get();
+    return view('suratkeluar.show',compact('downloads'));
+    }
+
+    public function agendakeluardownload_excel(){
+        $suratkeluar = \App\SuratKeluar::select('id', 'isi', 'tujuan_surat', 'kode', 'no_surat', 'tgl_surat', 'tgl_catat', 'keterangan')->get();
+        return Excel::create('Agenda_Surat_Keluar', function($excel) use ($suratkeluar){
+            $excel->sheet('Agenda_Surat_Keluar',function($sheet) use ($suratkeluar){
+                $sheet->fromArray($suratkeluar);
+            });
+        })->download('xls');
     }
 }

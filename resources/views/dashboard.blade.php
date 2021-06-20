@@ -60,22 +60,22 @@
                         </div>
                     </div>
                     <!-- ./col -->
-                    {{-- @if (auth()->user()->role == 'admin') --}}
+                    @if (auth()->user()->role == 'admin')
                     <div class="col-lg-3 col-6">
                         <!-- small box -->
                         <div class="small-box bg-light">
                             <div class="inner">
-                                <h3>0</h3>{{-- <h3>{{DB::table('users')->count()}}</h3> --}}
+                                <h3>{{DB::table('users')->count()}}</h3>
                                 <p>Pengguna</p>
                             </div>
                             <div class="icon">
                                 <i class="nav-icon fas fa-user"></i>
                             </div>
-                            <a href="#" class="small-box-footer bg-orange">Lihat Detail <i
+                            <a href="{{route('pengguna.index')}}" class="small-box-footer bg-orange">Lihat Detail <i
                                     class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
-                    {{-- @endif --}}
+                    @endif 
                     <!-- ./col -->
                 </div>
             </div>

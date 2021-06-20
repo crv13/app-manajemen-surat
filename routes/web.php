@@ -30,6 +30,10 @@ Route::get('/suratmasuk/{id}/show', 'SuratMasukController@show');
 Route::get('/suratmasuk/{id}/edit', 'SuratMasukController@edit');
 Route::post('/suratmasuk/{id}/update','SuratMasukController@update');
 Route::get('/suratmasuk/{id}/destroy','SuratMasukController@destroy');
+Route::get('/suratmasuk/agenda','SuratMasukController@agenda');
+Route::get('/suratmasuk/agendamasukcetak_pdf','SuratMasukController@agendamasukcetak_pdf');
+Route::get('/suratmasuk.agendamasukdownload_excel','SuratMasukController@agendamasukdownload_excel')->name('suratmasuk.downloadexcel');
+Route::get('/suratmasuk/galeri','SuratMasukController@galeri');
 
 Route::get('/suratkeluar/index', 'SuratKeluarController@index');
 Route::get('/suratkeluar/create', 'SuratKeluarController@create');
@@ -38,6 +42,10 @@ Route::get('/suratkeluar/{id}/show', 'SuratKeluarController@show');
 Route::get('/suratkeluar/{id}/edit', 'SuratKeluarController@edit');
 Route::post('/suratkeluar/{id}/update','SuratKeluarController@update');
 Route::get('/suratkeluar/{id}/destroy','SuratKeluarController@destroy');
+Route::get('/suratkeluar/agenda','SuratKeluarController@agenda');
+Route::get('/suratkeluar/agendakeluarcetak_pdf','SuratKeluarController@agendakeluarcetak_pdf');
+Route::get('/suratkeluar.agendakeluardownload_excel','SuratKeluarController@agendakeluardownload_excel')->name('suratkeluar.downloadexcel');
+Route::get('/suratkeluar/galeri','SuratKeluarController@galeri');
 
 Route::get('/klasifikasi', 'KlasifikasiController@index');
 Route::get('/klasifikasi/index','KlasifikasiController@index');

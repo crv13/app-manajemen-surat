@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\SuratMasuk;
-use App\Klasifikasi;
-use File;
+use App\Instansi;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PDF;
+use Excel;
 
 
 class SuratMasukController extends Controller
@@ -132,4 +134,44 @@ class SuratMasukController extends Controller
         File::delete($path . $suratmasuk->filemasuk);
         return redirect('suratmasuk/index')->with('sukses','Data Surat Masuk Berhasil Dihapus');
     }
+
+    //Function Untuk Agenda Surat Masuk
+    public function agenda(Request $request)
+    {
+        $data_suratmasuk = SuratMasuk::all();
+        return view('suratmasuk.agenda', compact('data_suratmasuk'));
+    }
+
+    //Function Untuk Galeri Surat Masuk
+    public function galeri(Request $request)
+    {
+        $data_suratmasuk = SuratMasuk::all();
+       return view('suratmasuk.galeri',['data_suratmasuk'=> $data_suratmasuk]);
+    }
+
+    //Function Untuk Download Agenda Surat Masuk
+    public function agendamasukcetak_pdf(Request $request)
+    {
+        $inst = Instansi::first();
+        $suratmasuk = \App\SuratMasuk::all();
+        $pdf = PDF::loadview('suratmasuk.cetakagendaPDF', compact('inst','suratmasuk','pdf'));
+        return $pdf->stream();
+    }
+
+    //function untuk download file
+    public function downfunc(){
+
+        $downloads=DB::table('suratmasuk')->get();
+        return view('suratmasuk.tampil',compact('downloads'));
+    }
+
+    public function agendamasukdownload_excel(){
+        $suratmasuk = \App\SuratMasuk::select('id', 'isi', 'asal_surat', 'kode', 'no_surat', 'tgl_surat', 'tgl_terima', 'keterangan')->get();
+        return Excel::create('Agenda_Surat_Masuk', function($excel) use ($suratmasuk){
+            $excel->sheet('Agenda_Surat_Masuk',function($sheet) use ($suratmasuk){
+                $sheet->fromArray($suratmasuk);
+            });
+        })->download('xls');
+    }
+
 }
